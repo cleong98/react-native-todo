@@ -6,7 +6,7 @@ import TodoItem from './components/TodoItem';
 import Icon from '@react-native-vector-icons/fontawesome6';
 import IconButton from './components/IconButton';
 import { useAppDispatch, useAppSelector } from '@app/hooks/storeHook';
-import { addTodo, deleteTodo, selectTodos, toggleTodo } from './todoSlice';
+import { deleteTodo, selectTodos, toggleTodo } from './todoSlice';
 import { useNavigation } from '@react-navigation/native';
 import { HomeStackParamList } from '@app/navigation/navigation';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
