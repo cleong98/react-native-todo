@@ -67,7 +67,7 @@ const TodoListScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.todoListContainer}>
+    <SafeAreaView style={styles.todoListContainer} edges={['top']}>
       <Header
         title={'Todo App'}
         action={
@@ -75,12 +75,12 @@ const TodoListScreen = () => {
             icon={
               <Icon name="plus" iconStyle="solid" color={'white'} size={18} />
             }
-            backgroundColor="red"
+            backgroundColor="#6874E8"
             onPress={onAddTodo}
           />
         }
       />
-      <View>
+      <View style={styles.scrollViewContainer}>
         <FlatList
           ListEmptyComponent={<TodoEmpty />}
           data={todos}
@@ -129,8 +129,11 @@ const TodoListScreen = () => {
 const styles = StyleSheet.create({
   todoListContainer: {
     flex: 1,
-    width: '100%',
+    height: '100%',
     backgroundColor: 'white',
+  },
+  scrollViewContainer: {
+    flex: 1,
   },
   item: {
     backgroundColor: '#f9c2ff',
