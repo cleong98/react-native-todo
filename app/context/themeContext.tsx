@@ -12,7 +12,7 @@ const ThemeContext = createContext<ThemeContextValue | undefined>(undefined);
 
 // create theme provider
 export const ThemeProvider: FC<{ children: ReactNode }> = ({ children }) => {
-  const [theme, setTheme] = useState<CustomAppTheme>('dark');
+  const [theme, setTheme] = useState<CustomAppTheme>('followSystem');
   const supportedThemes: CustomAppTheme[] = ['light', 'dark', 'followSystem'];
   const updateTheme = (theme: CustomAppTheme) => {
     setTheme(theme);
