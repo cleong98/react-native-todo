@@ -36,17 +36,8 @@ const AppBar: FC<AppBarProps> = ({
         backgroundColor: theme.card,
         justifyContent: 'center',
         alignItems: 'center',
-        ...Platform.select({
-          android: {
-            borderBottomWidth: 0.5,
-            borderBottomColor: '#00000033',
-          },
-          default: {
-            shadowOffset: { width: 0, height: 2 },
-            shadowRadius: 3.84,
-            shadowOpacity: 0.25,
-          },
-        }),
+        borderBottomColor: theme.border,
+        borderBottomWidth: 0.5,
       },
       title: {
         fontSize: 18,

@@ -24,8 +24,7 @@ type AddTodoFormData = {
 };
 
 const AddTodoScreen = () => {
-
-  const styles = useThemedStyles((theme) => ({
+  const styles = useThemedStyles(theme => ({
     container: {
       flex: 1,
       backgroundColor: theme.card,
@@ -38,9 +37,22 @@ const AddTodoScreen = () => {
       padding: 20,
     },
     formContainer: { gap: 15, flex: 1 },
-    formTextInputTitle: { fontWeight: '500', fontSize: 16 ,  color: theme.textColor,},
+    formTextInputTitle: {
+      fontWeight: '500',
+      fontSize: 16,
+      color: theme.textColor,
+    },
     formTextInput: {
       height: 50,
+      borderColor: 'grey',
+      borderWidth: 1,
+      borderRadius: 5,
+      padding: 10,
+      backgroundColor: theme.background,
+      color: theme.textColor,
+    },
+    formTextAreaInput: {
+      height: 120,
       borderColor: 'grey',
       borderWidth: 1,
       borderRadius: 5,
@@ -67,7 +79,7 @@ const AddTodoScreen = () => {
       fontWeight: 'bold',
       color: theme.buttonText,
     },
-  }))
+  }));
   const orientation = useOrientation();
 
   const navigation = useNavigation();
@@ -133,9 +145,11 @@ const AddTodoScreen = () => {
                 rules={{ required: 'Description is required' }}
                 render={({ field: { onChange, value } }) => (
                   <TextInput
+                    multiline={true}
+                    textAlignVertical="top"
                     value={value}
                     onChangeText={onChange}
-                    style={styles.formTextInput}
+                    style={styles.formTextAreaInput}
                   />
                 )}
               />

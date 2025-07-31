@@ -104,19 +104,22 @@ const TodoListScreen = () => {
       <Header
         title={'Todo App'}
         action={
-          <IconButton
-            icon={
-              <Icon name="plus" iconStyle="solid" color={'white'} size={18} />
-            }
-            backgroundColor="#6874E8"
-            onPress={onAddTodo}
-          />
+          <View style={{ paddingRight: 10 }}>
+            <IconButton
+              icon={
+                <Icon name="plus" iconStyle="solid" color={'white'} size={18} />
+              }
+              backgroundColor="#6874E8"
+              onPress={onAddTodo}
+            />
+          </View>
         }
       />
       <View style={styles.scrollViewContainer}>
         <FlatList
           ListEmptyComponent={TodoEmpty}
           data={todos}
+          ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
           renderItem={({ item }) => {
             const disabled = item.completedData !== null;
             return (

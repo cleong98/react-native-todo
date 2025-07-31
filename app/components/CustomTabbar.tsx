@@ -14,8 +14,9 @@ const CustomTabbar: FC<BottomTabBarProps> = ({
     container: {
       flexDirection: 'row',
       height: 60,
-      borderTopWidth: 1,
+      borderTopWidth: 0.5,
       borderTopColor: theme.border,
+
       backgroundColor: theme.background,
     },
     tab: {
@@ -24,9 +25,9 @@ const CustomTabbar: FC<BottomTabBarProps> = ({
       alignItems: 'center',
       justifyContent: 'center',
     },
-    tabbarIcon: { color: theme.iconColor },
+    tabbarIcon: { color: theme.textColor },
     activeIcon: { color: theme.primary, fontSize: 24 },
-    tabbarText: { fontSize: 14, fontWeight: '400', color: theme.iconColor },
+    tabbarText: { fontSize: 14, fontWeight: '400', color: theme.textColor },
     activeText: { color: theme.primary, fontSize: 16 },
   }));
   return (

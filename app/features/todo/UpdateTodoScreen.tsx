@@ -60,6 +60,15 @@ const UpdateTodoScreen = () => {
       backgroundColor: theme.background,
       color: theme.textColor,
     },
+    formTextAreaInput: {
+      height: 120,
+      borderColor: 'grey',
+      borderWidth: 1,
+      borderRadius: 5,
+      padding: 10,
+      backgroundColor: theme.background,
+      color: theme.textColor,
+    },
     formTextInputError: {
       color: 'red',
       fontSize: 16,
@@ -192,9 +201,11 @@ const UpdateTodoScreen = () => {
                 rules={{ required: 'Description is required' }}
                 render={({ field: { onChange, value } }) => (
                   <TextInput
+                    multiline={true}
+                    textAlignVertical="top"
                     value={value}
                     onChangeText={onChange}
-                    style={styles.formTextInput}
+                    style={styles.formTextAreaInput}
                   />
                 )}
               />
