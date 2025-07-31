@@ -42,9 +42,26 @@ const CustomTabbar: FC<BottomTabBarProps> = ({
         const icon = useMemo(() => {
           const baseStyle = [styles.tabbarIcon, isFocused && styles.activeIcon];
           switch (routeName) {
-            case 'Home': return <Icon name="house" iconStyle="solid" size={20} style={baseStyle} />;
-            case 'Setting': return <Icon name="gear" iconStyle="solid" size={20} style={baseStyle} />;
-            default: return null;
+            case 'Home':
+              return (
+                <Icon
+                  name="house"
+                  iconStyle="solid"
+                  size={20}
+                  style={baseStyle}
+                />
+              );
+            case 'Setting':
+              return (
+                <Icon
+                  name="gear"
+                  iconStyle="solid"
+                  size={20}
+                  style={baseStyle}
+                />
+              );
+            default:
+              return null;
           }
         }, [routeName, isFocused, styles]);
         const onPress = () => {
@@ -60,11 +77,7 @@ const CustomTabbar: FC<BottomTabBarProps> = ({
         };
 
         return (
-          <Pressable
-            key={route.key}
-            onPress={onPress}
-            style={styles.tab}
-          >
+          <Pressable key={route.key} onPress={onPress} style={styles.tab}>
             {icon}
             <Text style={[styles.tabbarText, isFocused && styles.activeText]}>
               {label}
