@@ -1,5 +1,5 @@
 import { StyleSheet, View, FlatList, Text, Alert } from 'react-native';
-import React from 'react';
+import React, { memo, useMemo } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '@app/components/AppBar';
 import TodoItem from './components/TodoItem';
@@ -10,21 +10,54 @@ import { deleteTodo, selectTodos, toggleTodo } from './todoSlice';
 import { useNavigation } from '@react-navigation/native';
 import { HomeStackParamList } from '@app/navigation/navigation';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import useThemedStyles from '@app/hooks/useThemedStyles';
 
 type TodoListScreenNavigationProp = NativeStackNavigationProp<
   HomeStackParamList,
   'TodoList'
 >;
 
-const TodoEmpty = () => {
-  return (
-    <View style={styles.emptyContainer}>
-      <Text style={styles.emptyText}>No todos</Text>
-    </View>
-  );
-};
-
 const TodoListScreen = () => {
+  const styles = useThemedStyles(theme =>
+    StyleSheet.create({
+      todoListContainer: {
+        flex: 1,
+        height: '100%',
+        backgroundColor: theme.background,
+        gap: 20,
+      },
+      scrollViewContainer: {
+        flex: 1,
+        padding: 10,
+      },
+      item: {
+        backgroundColor: '#f9c2ff',
+        padding: 20,
+        marginVertical: 8,
+        marginHorizontal: 16,
+      },
+      title: {
+        fontSize: 32,
+      },
+      emptyContainer: {
+        paddingVertical: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+      },
+      emptyText: {
+        fontSize: 18,
+        color: 'grey',
+      },
+    }),
+  );
+  const TodoEmpty = useMemo(() => {
+    return (
+      <View style={styles.emptyContainer}>
+        <Text style={styles.emptyText}>No todos</Text>
+      </View>
+    );
+  }, [styles]);
+
   const navigation = useNavigation<TodoListScreenNavigationProp>();
   const todos = useAppSelector(selectTodos);
 
@@ -82,7 +115,7 @@ const TodoListScreen = () => {
       />
       <View style={styles.scrollViewContainer}>
         <FlatList
-          ListEmptyComponent={<TodoEmpty />}
+          ListEmptyComponent={TodoEmpty}
           data={todos}
           renderItem={({ item }) => {
             const disabled = item.completedData !== null;
@@ -126,34 +159,5 @@ const TodoListScreen = () => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  todoListContainer: {
-    flex: 1,
-    height: '100%',
-    backgroundColor: 'white',
-  },
-  scrollViewContainer: {
-    flex: 1,
-  },
-  item: {
-    backgroundColor: '#f9c2ff',
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-  },
-  title: {
-    fontSize: 32,
-  },
-  emptyContainer: {
-    paddingVertical: 40,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  emptyText: {
-    fontSize: 18,
-    color: 'grey',
-  },
-});
 
 export default TodoListScreen;

@@ -8,6 +8,7 @@ export interface AppTheme {
   border: string;
   textColor: string;
   iconColor: string;
+  buttonText: string;
 }
 
 export const lightTheme: AppTheme = {
@@ -18,6 +19,7 @@ export const lightTheme: AppTheme = {
   border: '#000',
   textColor: '#000',
   iconColor: '#fff',
+  buttonText: '#FFFFFF',
 };
 
 export const darkTheme: AppTheme = {
@@ -28,6 +30,7 @@ export const darkTheme: AppTheme = {
   border: '#333',
   textColor: '#FFFFFF',
   iconColor: '#FFFFFF',
+  buttonText: '#FFFFFF',
 };
 
 export type SupportAppTheme = Exclude<CustomAppTheme, 'followSystem'>;

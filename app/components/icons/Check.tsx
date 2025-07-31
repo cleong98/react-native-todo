@@ -2,10 +2,10 @@ import Icon from '@react-native-vector-icons/fontawesome6';
 import { FC } from 'react';
 import { IconProps } from './type';
 type Props = IconProps;
-const Cancel: FC<Props> = ({ size, color, style }) => {
+const Checked: FC<Props> = ({ size, color, style }) => {
   return (
     <Icon
-      name="xmark"
+      name="check"
       iconStyle="solid"
       size={size}
       color={color}
@@ -14,4 +14,4 @@ const Cancel: FC<Props> = ({ size, color, style }) => {
   );
 };
 
-export default Cancel;
+export default Checked;

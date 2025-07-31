@@ -1,9 +1,9 @@
 import { ThemeContextValue, useTheme } from '@app/context/themeContext';
 import { AppTheme, getAppTheme } from '@app/theme/theme';
 import { useMemo } from 'react';
-import { StyleSheet, useColorScheme } from 'react-native';
+import { StyleSheet, TextStyle, useColorScheme, ViewStyle } from 'react-native';
 
-const useThemedStyles = <T extends StyleSheet.NamedStyles<T>>(
+const useThemedStyles = <T extends Record<string, ViewStyle | TextStyle>>(
   createStyles: (theme: AppTheme) => T,
 ) => {
   const { theme: currentTheme } = useTheme();

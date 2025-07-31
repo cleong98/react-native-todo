@@ -1,6 +1,7 @@
 import { View, Text, StyleSheet } from 'react-native';
 import React, { FC, ReactNode, useState } from 'react';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import useThemedStyles from '@app/hooks/useThemedStyles';
 
 interface TodoItemProps {
   title: string;
@@ -15,6 +16,37 @@ const TodoItem: FC<TodoItemProps> = ({
   actions,
   toggleTodo,
 }) => {
+  const styles = useThemedStyles(theme => ({
+    container: {
+      width: '100%',
+      backgroundColor: theme.card,
+      padding: 20,
+      flexDirection: 'row',
+      alignItems: 'center',
+      borderBottomColor: theme.border,
+      borderBottomWidth: 0.5,
+      borderRadius: 10,
+    },
+    actionContainer: {
+      flexDirection: 'row',
+      gap: 14,
+    },
+    checkboxContainer: {
+      width: 50,
+    },
+    contentContainer: {
+      flex: 1,
+    },
+    todoTitle: { fontSize: 20, fontWeight: 'bold', color: theme.textColor },
+    todoDescription: {
+      fontSize: 16,
+      fontWeight: '300',
+      color: theme.textColor,
+    },
+    completedText: {
+      textDecorationLine: 'line-through',
+    },
+  }));
   const [completed, setCompleted] = useState(false);
   return (
     <View style={styles.container}>
@@ -33,7 +65,11 @@ const TodoItem: FC<TodoItemProps> = ({
         }}
       />
       <View style={styles.contentContainer}>
-        <Text numberOfLines={1} ellipsizeMode="tail" style={[styles.todoTitle, completed && styles.completedText]}>
+        <Text
+          numberOfLines={1}
+          ellipsizeMode="tail"
+          style={[styles.todoTitle, completed && styles.completedText]}
+        >
           {title}
         </Text>
         <Text
@@ -48,31 +84,5 @@ const TodoItem: FC<TodoItemProps> = ({
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    width: '100%',
-    padding: 20,
-    flexDirection: 'row',
-    alignItems: 'center',
-    borderBottomColor: 'gray',
-    borderBottomWidth: 0.5,
-  },
-  actionContainer: {
-    flexDirection: 'row',
-    gap: 14,
-  },
-  checkboxContainer: {
-    width: 50,
-  },
-  contentContainer: {
-    flex: 1,
-  },
-  todoTitle: { fontSize: 20, fontWeight: 'bold' },
-  todoDescription: { fontSize: 16, fontWeight: '300' },
-  completedText: {
-  textDecorationLine: 'line-through'
-  }
-});
 
 export default TodoItem;

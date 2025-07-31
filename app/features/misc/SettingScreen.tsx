@@ -7,6 +7,8 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { SettingStackParamList } from '@app/navigation/navigation';
 import useThemedStyles from '@app/hooks/useThemedStyles';
+import { useTheme } from '@app/context/themeContext';
+import { capitalCase } from 'change-case';
 
 type SettingScreenNavigationProps = NativeStackNavigationProp<
   SettingStackParamList,
@@ -16,6 +18,7 @@ type SettingScreenNavigationProps = NativeStackNavigationProp<
 const SettingScreen = () => {
   const navigation = useNavigation<SettingScreenNavigationProps>();
 
+  const { theme } = useTheme();
   const styles = useThemedStyles(theme =>
     StyleSheet.create({
       container: {
@@ -23,9 +26,9 @@ const SettingScreen = () => {
       },
       sectionContainer: {
         backgroundColor: theme.background,
-        padding: 30,
+        padding: 20,
         flex: 1,
-        gap: 5,
+        gap: 10,
       },
       sectionTitle: {
         color: theme.textColor,
@@ -44,11 +47,20 @@ const SettingScreen = () => {
         alignItems: 'center',
       },
       sectionItemIcon: {
-        color: theme.iconColor,
+        color: theme.textColor,
       },
       sectionItemLabel: {
         color: theme.textColor,
         flex: 1,
+      },
+      sectionItemActionContainer: {
+        gap: 10,
+        flexDirection: 'row',
+        alignItems: 'baseline',
+      },
+      sectionItemHintText: {
+        color: theme.textColor,
+        fontSize: 14,
       },
       sectionItemPressed: {
         backgroundColor: theme.lightPrimary,
@@ -76,10 +88,11 @@ const SettingScreen = () => {
       {
         title: 'Theme',
         icon: <ChevronRight style={styles.sectionItemIcon} />,
+        hint: theme,
         onPress: handleThemeNavigate,
       },
     ],
-    [handleThemeNavigate, styles],
+    [handleThemeNavigate, styles, theme],
   );
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
@@ -87,7 +100,7 @@ const SettingScreen = () => {
       <View style={styles.sectionContainer}>
         <Text style={styles.sectionTitle}>Personalization</Text>
         <View style={styles.section}>
-          {items.map(({ title, icon, onPress }, index) => {
+          {items.map(({ title, icon, hint, onPress }, index) => {
             const isSingle = items.length === 1;
             const isFirst = index === 0;
             const isLast = index === items.length - 1;
@@ -104,7 +117,12 @@ const SettingScreen = () => {
                 onPress={onPress}
               >
                 <Text style={styles.sectionItemLabel}>{title}</Text>
-                {icon}
+                <View style={styles.sectionItemActionContainer}>
+                  <Text style={styles.sectionItemHintText}>
+                    {capitalCase(hint)}
+                  </Text>
+                  {icon}
+                </View>
               </Pressable>
             );
           })}

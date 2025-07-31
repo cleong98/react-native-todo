@@ -64,7 +64,7 @@ const HomeTabs = () => {
         headerShown: false,
         popToTopOnBlur: true,
       }}
-      initialRouteName="Setting"
+      initialRouteName="Home"
       tabBar={props => <CustomTabbar {...props} />}
     >
       <Tab.Screen name="Home" component={HomeStackNavigation} />
