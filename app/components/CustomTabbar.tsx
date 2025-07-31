@@ -1,5 +1,5 @@
-import { View, Text, StyleSheet, TouchableOpacity, Pressable } from 'react-native';
-import { FC, ReactNode } from 'react';
+import { View, Text, Pressable } from 'react-native';
+import { FC, ReactNode, useMemo } from 'react';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { BottomTabParamList } from '@app/navigation/navigation';
 import Icon from '@react-native-vector-icons/fontawesome6';
@@ -39,34 +39,14 @@ const CustomTabbar: FC<BottomTabBarProps> = ({
 
         const routeName = route.name as keyof BottomTabParamList;
 
-        let icon: ReactNode;
-
-        switch (routeName) {
-          case 'Home': {
-            icon = (
-              <Icon
-                name="house"
-                iconStyle="solid"
-                size={20}
-                style={[styles.tabbarIcon, isFocused && styles.activeIcon]}
-              />
-            );
-            break;
+        const icon = useMemo(() => {
+          const baseStyle = [styles.tabbarIcon, isFocused && styles.activeIcon];
+          switch (routeName) {
+            case 'Home': return <Icon name="house" iconStyle="solid" size={20} style={baseStyle} />;
+            case 'Setting': return <Icon name="gear" iconStyle="solid" size={20} style={baseStyle} />;
+            default: return null;
           }
-
-          case 'Setting': {
-            icon = (
-              <Icon
-                name="gear"
-                iconStyle="solid"
-                size={20}
-                style={[styles.tabbarIcon, isFocused && styles.activeIcon]}
-              />
-            );
-            break;
-          }
-        }
-
+        }, [routeName, isFocused, styles]);
         const onPress = () => {
           const event = navigation.emit({
             type: 'tabPress',
