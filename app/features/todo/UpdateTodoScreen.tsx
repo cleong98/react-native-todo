@@ -2,49 +2,87 @@ import {
   View,
   Text,
   StyleSheet,
-  Button,
   TouchableOpacity,
-  TextInput,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
+  TextInput,
 } from 'react-native';
+import React, { useMemo } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AppBar from '@app/components/AppBar';
-import { useOrientation } from '@app/hooks/useOrientation';
+import { HomeStackParamList } from '@app/navigation/navigation';
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { selectTodoById, updateTodo } from './todoSlice';
+import { useAppDispatch, useAppSelector } from '@app/hooks/storeHook';
 import { Controller, useForm } from 'react-hook-form';
-import { useAppDispatch } from '@app/hooks/storeHook';
-import { addTodo } from './todoSlice';
-import { useNavigation } from '@react-navigation/native';
-import { useMemo } from 'react';
+import { useOrientation } from '@app/hooks/useOrientation';
 
-type AddTodoFormData = {
+type UpdateTodoScreenNavigationProp = NativeStackNavigationProp<
+  HomeStackParamList,
+  'UpdateTodo'
+>;
+
+type UpdateTodoRouteProps = RouteProp<HomeStackParamList, 'UpdateTodo'>;
+
+type UpdateTodoForm = {
   title: string;
   description: string;
 };
 
-const AddTodoScreen = () => {
-  const orientation = useOrientation();
+const UpdateTodoScreen = () => {
+  const navigation = useNavigation<UpdateTodoScreenNavigationProp>();
 
-  const navigation = useNavigation();
+  const route = useRoute<UpdateTodoRouteProps>();
+
+  const { id } = route.params;
+
+  const todo = useAppSelector(state => selectTodoById(state, id));
 
   const {
     control,
     handleSubmit,
-    formState: { errors },
-  } = useForm<AddTodoFormData>();
+  } = useForm<UpdateTodoForm>({
+    defaultValues: todo
+  });
 
   const dispatch = useAppDispatch();
 
-  const onSubmit = (data: AddTodoFormData) => {
+  const orientation = useOrientation();
+
+  const onSubmit = (id: string, data: UpdateTodoForm) => {
     console.log(data);
-    dispatch(addTodo(data));
+    dispatch(
+      updateTodo({
+        id,
+        ...data,
+      }),
+    );
     navigation.goBack();
   };
 
   const keyboardVerticalOffset = useMemo(() => {
     return orientation === 'LANDSCAPE' ? 0 : 80;
   }, [orientation]);
+
+  const goBack = () => {
+    navigation.goBack();
+  };
+
+  if (!todo) {
+    return (
+      <SafeAreaView style={styles.container}>
+        <AppBar title="Update Todo" />
+        <View style={styles.contentContainer}>
+          <Text style={styles.notFoundTodoText}>Todo ID {id} Not Found</Text>
+          <TouchableOpacity style={styles.notFoundButton} onPress={goBack}>
+            <Text style={styles.notFoundButtonText}>Go Back</Text>
+          </TouchableOpacity>
+        </View>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
@@ -53,7 +91,7 @@ const AddTodoScreen = () => {
         behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         keyboardVerticalOffset={keyboardVerticalOffset}
       >
-        <AppBar title="Add Todo" />
+        <AppBar title="Update Todo" />
         <ScrollView
           contentContainerStyle={styles.scrollViewContainer}
           keyboardShouldPersistTaps="handled"
@@ -74,11 +112,6 @@ const AddTodoScreen = () => {
                   />
                 )}
               />
-              {errors.title && (
-                <Text style={styles.formTextInputError}>
-                  {errors.title.message}
-                </Text>
-              )}
             </View>
             <View style={styles.formGap}>
               <Text style={styles.formTextInputTitle}>Description</Text>
@@ -95,18 +128,13 @@ const AddTodoScreen = () => {
                   />
                 )}
               />
-              {errors.description && (
-                <Text style={styles.formTextInputError}>
-                  {errors.description.message}
-                </Text>
-              )}
             </View>
             <View style={styles.expanded} />
             {orientation === 'LANDSCAPE' && (
               <View style={styles.submitButtonContainer}>
                 <TouchableOpacity
                   style={styles.submitButton}
-                  onPress={handleSubmit(onSubmit)}
+                  onPress={handleSubmit(data => onSubmit(todo.id, data))}
                 >
                   <Text style={styles.submitButtonText}>Add Todo</Text>
                 </TouchableOpacity>
@@ -118,9 +146,9 @@ const AddTodoScreen = () => {
           <View style={styles.submitButtonContainer}>
             <TouchableOpacity
               style={styles.submitButton}
-              onPress={handleSubmit(onSubmit)}
+              onPress={handleSubmit(data => onSubmit(todo.id, data))}
             >
-              <Text style={styles.submitButtonText}>Add Todo</Text>
+              <Text style={styles.submitButtonText}>Update Todo</Text>
             </TouchableOpacity>
           </View>
         )}
@@ -132,7 +160,6 @@ const AddTodoScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white'
   },
   keyboardContainer: {
     flex: 1,
@@ -141,6 +168,13 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     padding: 20,
   },
+  contentContainer: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 10,
+  },
+  formGap: { gap: 5 },
   formContainer: { gap: 15, flex: 1 },
   formTextInputTitle: { fontWeight: '500', fontSize: 16 },
   formTextInput: {
@@ -150,11 +184,24 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     padding: 10,
   },
-  formTextInputError: {
-    color: 'red',
-    fontSize: 16,
+  notFoundTodoText: {
+    textAlign: 'center',
+    fontSize: 18,
+    fontWeight: 'bold',
   },
-  formGap: { gap: 5 },
+  notFoundButton: {
+    // flex: 1,
+    flexDirection: 'row',
+    backgroundColor: '#6874E8',
+    borderRadius: 5,
+    // width: '100%',
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  notFoundButtonText: {
+    color: 'white',
+  },
   expanded: { flex: 1 },
   submitButtonContainer: {
     padding: 10,
@@ -171,4 +218,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AddTodoScreen;
+export default UpdateTodoScreen;

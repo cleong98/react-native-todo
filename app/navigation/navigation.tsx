@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import AddTodoScreen from '@app/features/todo/AddTodoScreen';
+import UpdateTodoScreen from '@app/features/todo/UpdateTodoScreen';
 
 export type BottomTabParamList = {
   Home: undefined;
@@ -41,7 +42,7 @@ const HomeStackNavigation = () => {
           headerShown: false,
         }}
         name="UpdateTodo"
-        component={TodoListScreen}
+        component={UpdateTodoScreen}
       />
     </Stack.Navigator>
   );

@@ -13,13 +13,7 @@ interface Todo {
 type CreateTodo = Pick<Todo, 'title' | 'description'>;
 type UpdateTodo = Pick<Todo, 'title' | 'description' | 'id'>;
 
-const initialState: Todo[] = [{
-  id: '123',
-  title: 'testing 123',
-  description: 'test',
-  createDate: new Date().toISOString(),
-  completedData: null,
-}];
+const initialState: Todo[] = [];
 
 const todoSlice = createSlice({
   name: 'todo',

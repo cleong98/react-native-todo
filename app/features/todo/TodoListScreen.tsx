@@ -90,6 +90,7 @@ const TodoListScreen = () => {
               <TodoItem
                 toggleTodo={_ => onToggleTodo(item.id)}
                 title={item.title}
+                description={item.description}
                 key={item.id}
                 actions={
                   <>
