@@ -4,6 +4,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import AddTodoScreen from '@app/features/todo/AddTodoScreen';
 import UpdateTodoScreen from '@app/features/todo/UpdateTodoScreen';
+import CustomTabbar from '@app/components/CustomTabbar';
+import SettingScreen from '@app/features/misc/SettingScreen';
 
 export type BottomTabParamList = {
   Home: undefined;
@@ -50,7 +52,7 @@ const HomeStackNavigation = () => {
 
 const HomeTabs = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator tabBar={(props) => <CustomTabbar {...props} />}>
       <Tab.Screen
         name="Home"
         options={{
@@ -63,7 +65,7 @@ const HomeTabs = () => {
         options={{
           headerShown: false,
         }}
-        component={TodoListScreen}
+        component={SettingScreen}
       />
     </Tab.Navigator>
   );
