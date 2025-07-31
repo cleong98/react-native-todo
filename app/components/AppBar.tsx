@@ -13,6 +13,7 @@ interface AppBarProps {
   title: string | ReactNode;
   action?: ReactNode;
   trailing?: ReactNode;
+  trailingIcon?: ReactNode;
   hideBackButton?: boolean;
 }
 
@@ -21,6 +22,7 @@ const AppBar: FC<AppBarProps> = ({
   action,
   trailing,
   hideBackButton = false,
+  trailingIcon,
 }) => {
   const navigation = useNavigation();
 
@@ -33,7 +35,22 @@ const AppBar: FC<AppBarProps> = ({
 
   return (
     <View style={styles.container}>
-      {isShowBackIcon ? (
+      {trailing ? (
+        trailing
+      ) : isShowBackIcon ? (
+        <View style={{ paddingLeft: 20 }}>
+          <TouchableOpacity onPress={onBack}>
+            {trailingIcon ? (
+              trailingIcon
+            ) : (
+              <Icon size={18} name="arrow-left" iconStyle="solid" />
+            )}
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <View style={{ width: 40 }} />
+      )}
+      {/* {isShowBackIcon ? (
         <View style={{ paddingLeft: 20 }}>
           <TouchableOpacity onPress={onBack}>
             <Icon size={18} name="arrow-left" iconStyle="solid" />
@@ -41,7 +58,7 @@ const AppBar: FC<AppBarProps> = ({
         </View>
       ) : (
         trailing ?? <View style={{ width: 40 }} />
-      )}
+      )} */}
       <View style={{ flex: 1, alignItems: 'center' }}>
         {isValidElement(title) ? (
           title
