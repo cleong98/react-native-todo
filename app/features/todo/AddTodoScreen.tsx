@@ -173,46 +173,4 @@ const AddTodoScreen = () => {
   );
 };
 
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: 'white'
-//   },
-//   keyboardContainer: {
-//     flex: 1,
-//   },
-//   scrollViewContainer: {
-//     flexGrow: 1,
-//     padding: 20,
-//   },
-//   formContainer: { gap: 15, flex: 1 },
-//   formTextInputTitle: { fontWeight: '500', fontSize: 16 },
-//   formTextInput: {
-//     height: 50,
-//     borderColor: 'grey',
-//     borderWidth: 1,
-//     borderRadius: 5,
-//     padding: 10,
-//   },
-//   formTextInputError: {
-//     color: 'red',
-//     fontSize: 16,
-//   },
-//   formGap: { gap: 5 },
-//   expanded: { flex: 1 },
-//   submitButtonContainer: {
-//     padding: 10,
-//   },
-//   submitButton: {
-//     backgroundColor: '#6874E8',
-//     borderRadius: 5,
-//   },
-//   submitButtonText: {
-//     textAlign: 'center',
-//     padding: 15,
-//     fontWeight: 'bold',
-//     color: 'white',
-//   },
-// });
-
 export default AddTodoScreen;

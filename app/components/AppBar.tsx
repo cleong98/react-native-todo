@@ -99,6 +99,4 @@ const AppBar: FC<AppBarProps> = ({
   );
 };
 
-// const styles = ;
-
 export default AppBar;
