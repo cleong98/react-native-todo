@@ -5,14 +5,14 @@ import AppBar from '@app/components/AppBar';
 import { ChevronRight } from '@app/components/icons';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { SettingStackParamList } from '@app/navigation/navigation';
 import useThemedStyles from '@app/hooks/useThemedStyles';
 import { useTheme } from '@app/context/themeContext';
 import { capitalCase } from 'change-case';
+import { StackParamList } from '@app/navigation/navigation';
 
 type SettingScreenNavigationProps = NativeStackNavigationProp<
-  SettingStackParamList,
-  'General'
+  StackParamList,
+  'Main'
 >;
 
 const SettingScreen = () => {

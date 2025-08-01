@@ -13,70 +13,50 @@ export type BottomTabParamList = {
   Setting: undefined;
 };
 
-export type HomeStackParamList = {
-  TodoList: undefined;
+export type StackParamList = {
+  Main: undefined;
   AddTodo: undefined;
   UpdateTodo: { id: string };
-};
-
-export type SettingStackParamList = {
-  General: undefined;
   Theme: undefined;
 };
 
 const Tab = createBottomTabNavigator<BottomTabParamList>();
 
-const Stack = createNativeStackNavigator<HomeStackParamList>();
-
-const SettingStack = createNativeStackNavigator<SettingStackParamList>();
-
-const HomeStackNavigation = () => {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <Stack.Screen name="TodoList" component={TodoListScreen} />
-      <Stack.Screen name="AddTodo" component={AddTodoScreen} />
-      <Stack.Screen name="UpdateTodo" component={UpdateTodoScreen} />
-    </Stack.Navigator>
-  );
-};
-
-const SettingStackNavigation = () => {
-  return (
-    <SettingStack.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
-      <SettingStack.Screen name="General" component={SettingScreen} />
-      <SettingStack.Screen name="Theme" component={ThemeScreen} />
-    </SettingStack.Navigator>
-  );
-};
+const Stack = createNativeStackNavigator<StackParamList>();
 
 const HomeTabs = () => {
   return (
     <Tab.Navigator
+      backBehavior="none"
       screenOptions={{
         headerShown: false,
-        popToTopOnBlur: true,
       }}
       initialRouteName="Home"
       tabBar={props => <CustomTabbar {...props} />}
     >
-      <Tab.Screen name="Home" component={HomeStackNavigation} />
-      <Tab.Screen name="Setting" component={SettingStackNavigation} />
+      <Tab.Screen name="Home" component={TodoListScreen} />
+      <Tab.Screen name="Setting" component={SettingScreen} />
     </Tab.Navigator>
+  );
+};
+
+const RootStack = () => {
+  return (
+    <Stack.Navigator screenOptions={{
+      headerShown: false,
+    }}>
+      <Stack.Screen name="Main" component={HomeTabs} />
+      <Stack.Screen name="AddTodo" component={AddTodoScreen} />
+      <Stack.Screen name="UpdateTodo" component={UpdateTodoScreen} />
+      <Stack.Screen name="Theme" component={ThemeScreen} />
+    </Stack.Navigator>
   );
 };
 
 const Navigation = () => {
   return (
     <NavigationContainer>
-      <HomeTabs />
+      <RootStack />
     </NavigationContainer>
   );
 };

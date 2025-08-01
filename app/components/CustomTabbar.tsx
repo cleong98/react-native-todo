@@ -1,5 +1,5 @@
 import { View, Text, Pressable } from 'react-native';
-import { FC, ReactNode, useMemo } from 'react';
+import { FC, useMemo } from 'react';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import { BottomTabParamList } from '@app/navigation/navigation';
 import Icon from '@react-native-vector-icons/fontawesome6';
@@ -14,9 +14,8 @@ const CustomTabbar: FC<BottomTabBarProps> = ({
     container: {
       flexDirection: 'row',
       height: 60,
-      borderTopWidth: 0.5,
+      borderTopWidth: 1,
       borderTopColor: theme.border,
-
       backgroundColor: theme.background,
     },
     tab: {

@@ -1,5 +1,5 @@
 import { StyleSheet, View, FlatList, Text, Alert } from 'react-native';
-import React, { memo, useMemo } from 'react';
+import { useMemo } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '@app/components/AppBar';
 import TodoItem from './components/TodoItem';
@@ -8,13 +8,13 @@ import IconButton from './components/IconButton';
 import { useAppDispatch, useAppSelector } from '@app/hooks/storeHook';
 import { deleteTodo, selectTodos, toggleTodo } from './todoSlice';
 import { useNavigation } from '@react-navigation/native';
-import { HomeStackParamList } from '@app/navigation/navigation';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import useThemedStyles from '@app/hooks/useThemedStyles';
+import { StackParamList } from '@app/navigation/navigation';
 
 type TodoListScreenNavigationProp = NativeStackNavigationProp<
-  HomeStackParamList,
-  'TodoList'
+  StackParamList,
+  'Main'
 >;
 
 const TodoListScreen = () => {

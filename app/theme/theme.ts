@@ -1,4 +1,4 @@
-import { CustomAppTheme, ThemeContextValue } from '@app/context/themeContext';
+import { CustomAppTheme } from '@app/context/themeContext';
 
 export interface AppTheme {
   background: string;

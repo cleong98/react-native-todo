@@ -1,7 +1,6 @@
 import {
   View,
   Text,
-  StyleSheet,
   TouchableOpacity,
   KeyboardAvoidingView,
   Platform,
@@ -11,7 +10,6 @@ import {
 import React, { useMemo } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AppBar from '@app/components/AppBar';
-import { HomeStackParamList } from '@app/navigation/navigation';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
 import { selectTodoById, updateTodo } from './todoSlice';
@@ -19,13 +17,14 @@ import { useAppDispatch, useAppSelector } from '@app/hooks/storeHook';
 import { Controller, useForm } from 'react-hook-form';
 import { useOrientation } from '@app/hooks/useOrientation';
 import useThemedStyles from '@app/hooks/useThemedStyles';
+import { StackParamList } from '@app/navigation/navigation';
 
 type UpdateTodoScreenNavigationProp = NativeStackNavigationProp<
-  HomeStackParamList,
+  StackParamList,
   'UpdateTodo'
 >;
 
-type UpdateTodoRouteProps = RouteProp<HomeStackParamList, 'UpdateTodo'>;
+type UpdateTodoRouteProps = RouteProp<StackParamList, 'UpdateTodo'>;
 
 type UpdateTodoForm = {
   title: string;

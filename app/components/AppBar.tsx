@@ -3,7 +3,6 @@ import {
   View,
   Text,
   StyleSheet,
-  Platform,
   TouchableOpacity,
 } from 'react-native';
 import Icon from '@react-native-vector-icons/fontawesome6';
