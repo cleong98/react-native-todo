@@ -1,12 +1,11 @@
 import React, { FC, isValidElement, ReactNode } from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from '@react-native-vector-icons/fontawesome6';
-import { useNavigation, useNavigationState } from '@react-navigation/native';
+import {
+  useNavigation,
+  useNavigationState,
+  useRoute,
+} from '@react-navigation/native';
 import useThemedStyles from '@app/hooks/useThemedStyles';
 
 interface AppBarProps {
@@ -25,7 +24,11 @@ const AppBar: FC<AppBarProps> = ({
   trailingIcon,
 }) => {
   const navigation = useNavigation();
-  const canGoBack = useNavigationState(state => state?.index > 0);
+  const route = useRoute();
+  // const canGoBack = useNavigationState(state => state?.index > 0);
+  const canGoBack = navigation.canGoBack();
+
+  const isTabScreen = ['Home', 'Setting'].includes(route.name);
 
   const styles = useThemedStyles(theme =>
     StyleSheet.create({
@@ -49,7 +52,7 @@ const AppBar: FC<AppBarProps> = ({
     }),
   );
 
-  const isShowBackIcon = !hideBackButton && canGoBack;
+  const isShowBackIcon = !hideBackButton && canGoBack && !isTabScreen;
 
   const onBack = () => {
     navigation.goBack();

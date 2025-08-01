@@ -32,6 +32,7 @@ const HomeTabs = () => {
       backBehavior="none"
       screenOptions={{
         headerShown: false,
+        popToTopOnBlur: true,
       }}
       initialRouteName="Home"
       tabBar={props => <CustomTabbar {...props} />}
@@ -44,9 +45,12 @@ const HomeTabs = () => {
 
 const RootStack = () => {
   return (
-    <Stack.Navigator initialRouteName="Splash" screenOptions={{
-      headerShown: false,
-    }}>
+    <Stack.Navigator
+      initialRouteName="Splash"
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <Stack.Screen name="Splash" component={SplashScreen} />
       <Stack.Screen name="Main" component={HomeTabs} />
       <Stack.Screen name="AddTodo" component={AddTodoScreen} />
