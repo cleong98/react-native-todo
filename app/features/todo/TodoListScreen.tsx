@@ -10,7 +10,6 @@ import {
   deleteTodo,
   selectFilteredTodos,
   selectTodoFilter,
-  selectTodos,
   TodoFilter,
   TodoFilters,
   toggleTodo,
@@ -21,8 +20,6 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import useThemedStyles from '@app/hooks/useThemedStyles';
 import { StackParamList } from '@app/navigation/navigation';
 import { images } from '@app/assets/constant';
-import { Picker } from '@react-native-picker/picker';
-import { camelCase } from 'change-case';
 
 type TodoListScreenNavigationProp = NativeStackNavigationProp<
   StackParamList,
@@ -48,7 +45,7 @@ const TodoListScreen = () => {
       },
       todoListContainer: {
         flex: 1,
-        height: '100%',
+        // height: '100%',
         backgroundColor: theme.background,
         gap: 20,
       },
@@ -155,28 +152,6 @@ const TodoListScreen = () => {
           </View>
         }
       />
-    <View
-    style={{
-      flex: 1,
-      height: 100,
-      // borderWidth: 1,
-      // borderColor: '#ccc',
-      // borderRadius: 6,
-      // overflow: 'hidden',
-    }}
-  >
-    <Picker
-      selectedValue={todoFilter}
-      onValueChange={onUpdateTodoFilter}
-      mode="dropdown"
-      style={{ width: '100%', height: 50 }}
-      itemStyle={{ height: 50, fontSize: 16 }}
-    >
-      {TodoFilters.map(f => (
-        <Picker.Item key={f} label={camelCase(f)} value={f} />
-      ))}
-    </Picker>
-  </View>
       <View style={styles.scrollViewContainer}>
         <FlatList
           ListEmptyComponent={TodoEmpty}
