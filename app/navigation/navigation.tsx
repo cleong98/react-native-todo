@@ -7,6 +7,7 @@ import UpdateTodoScreen from '@app/features/todo/UpdateTodoScreen';
 import CustomTabbar from '@app/components/CustomTabbar';
 import SettingScreen from '@app/features/misc/SettingScreen';
 import ThemeScreen from '@app/features/misc/ThemeScreen';
+import SplashScreen from '@app/features/misc/SplashScreen';
 
 export type BottomTabParamList = {
   Home: undefined;
@@ -14,6 +15,7 @@ export type BottomTabParamList = {
 };
 
 export type StackParamList = {
+  Splash: undefined;
   Main: undefined;
   AddTodo: undefined;
   UpdateTodo: { id: string };
@@ -42,9 +44,10 @@ const HomeTabs = () => {
 
 const RootStack = () => {
   return (
-    <Stack.Navigator screenOptions={{
+    <Stack.Navigator initialRouteName="Splash" screenOptions={{
       headerShown: false,
     }}>
+      <Stack.Screen name="Splash" component={SplashScreen} />
       <Stack.Screen name="Main" component={HomeTabs} />
       <Stack.Screen name="AddTodo" component={AddTodoScreen} />
       <Stack.Screen name="UpdateTodo" component={UpdateTodoScreen} />
