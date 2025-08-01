@@ -1,4 +1,4 @@
-import { StyleSheet, View, FlatList, Text, Alert, Image } from 'react-native';
+import { StyleSheet, View, FlatList, Text, Alert, Image, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import { useMemo } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '@app/components/AppBar';
@@ -147,80 +147,91 @@ const TodoListScreen = () => {
   };
 
   return (
-    <SafeAreaView style={styles.todoListContainer} edges={['top']}>
-      <Header
-        title={AppTitle}
-        action={
-          <View style={{ paddingRight: 10 }}>
-            <IconButton
-              icon={
-                <Icon name="plus" iconStyle="solid" color={'white'} size={18} />
-              }
-              backgroundColor="#6874E8"
-              onPress={onAddTodo}
-            />
-          </View>
-        }
-      />
-      <SearchBar value={TodoKeyword} onChangeText={onUpdateKeyword} />
-      <ChipSelection
-        items={TodoFilters}
-        renderItem={item => {
-          return (
-            <Chip
-              key={item}
-              value={item}
-              selected={item === selectedTodoFilter}
-              onPress={onUpdateTodoFilter}
-            />
-          );
-        }}
-      />
-      <View style={styles.scrollViewContainer}>
-        <FlatList
-          ListEmptyComponent={TodoEmpty}
-          data={todos}
-          ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
-          renderItem={({ item }) => {
-            const disabled = item.completedDate !== null;
-            return (
-              <TodoItem
-                toggleTodo={_ => onToggleTodo(item.id)}
-                title={item.title}
-                description={item.description}
-                key={item.id}
-                actions={
-                  <>
-                    <IconButton
-                      disabled={disabled}
-                      icon={
-                        <Icon size={16} name="pen-to-square" color={'white'} />
-                      }
-                      onPress={() => onEdit(item.id)}
-                      backgroundColor="#4CAF50"
-                    />
-                    <IconButton
-                      disabled={disabled}
-                      icon={
-                        <Icon
-                          size={16}
-                          name="trash"
-                          iconStyle="solid"
-                          color={'white'}
-                        />
-                      }
-                      onPress={() => onDeleteTodo(item.id)}
-                      backgroundColor="#F44336"
-                    />
-                  </>
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <SafeAreaView style={styles.todoListContainer} edges={['top']}>
+        <Header
+          title={AppTitle}
+          action={
+            <View style={{ paddingRight: 10 }}>
+              <IconButton
+                icon={
+                  <Icon
+                    name="plus"
+                    iconStyle="solid"
+                    color={'white'}
+                    size={18}
+                  />
                 }
+                backgroundColor="#6874E8"
+                onPress={onAddTodo}
+              />
+            </View>
+          }
+        />
+        <SearchBar value={TodoKeyword} onChangeText={onUpdateKeyword} />
+        <ChipSelection
+          items={TodoFilters}
+          renderItem={item => {
+            return (
+              <Chip
+                key={item}
+                value={item}
+                selected={item === selectedTodoFilter}
+                onPress={onUpdateTodoFilter}
               />
             );
           }}
-          keyExtractor={item => item.id.toString()}
         />
-      </View>
-    </SafeAreaView>
+        <View style={styles.scrollViewContainer}>
+          <FlatList
+            ListEmptyComponent={TodoEmpty}
+            data={todos}
+            ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
+            renderItem={({ item }) => {
+              const disabled = item.completedDate !== null;
+              return (
+                <TodoItem
+                  toggleTodo={_ => onToggleTodo(item.id)}
+                  title={item.title}
+                  description={item.description}
+                  key={item.id}
+                  actions={
+                    <>
+                      <IconButton
+                        disabled={disabled}
+                        icon={
+                          <Icon
+                            size={16}
+                            name="pen-to-square"
+                            color={'white'}
+                          />
+                        }
+                        onPress={() => onEdit(item.id)}
+                        backgroundColor="#4CAF50"
+                      />
+                      <IconButton
+                        disabled={disabled}
+                        icon={
+                          <Icon
+                            size={16}
+                            name="trash"
+                            iconStyle="solid"
+                            color={'white'}
+                          />
+                        }
+                        onPress={() => onDeleteTodo(item.id)}
+                        backgroundColor="#F44336"
+                      />
+                    </>
+                  }
+                />
+              );
+            }}
+            keyExtractor={item => item.id.toString()}
+          />
+        </View>
+      </SafeAreaView>
+    </TouchableWithoutFeedback>
   );
 };
 
