@@ -6,12 +6,23 @@ import TodoItem from './components/TodoItem';
 import Icon from '@react-native-vector-icons/fontawesome6';
 import IconButton from './components/IconButton';
 import { useAppDispatch, useAppSelector } from '@app/hooks/storeHook';
-import { deleteTodo, selectFilteredTodos, selectTodos, toggleTodo } from './todoSlice';
+import {
+  deleteTodo,
+  selectFilteredTodos,
+  selectTodoFilter,
+  selectTodos,
+  TodoFilter,
+  TodoFilters,
+  toggleTodo,
+  updateFilter,
+} from './todoSlice';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import useThemedStyles from '@app/hooks/useThemedStyles';
 import { StackParamList } from '@app/navigation/navigation';
 import { images } from '@app/assets/constant';
+import { Picker } from '@react-native-picker/picker';
+import { camelCase } from 'change-case';
 
 type TodoListScreenNavigationProp = NativeStackNavigationProp<
   StackParamList,
@@ -24,7 +35,7 @@ const TodoListScreen = () => {
       appTitleContainer: {
         flexDirection: 'row',
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
       },
       appTitleText: {
         fontSize: 18,
@@ -74,14 +85,17 @@ const TodoListScreen = () => {
   }, [styles]);
 
   const AppTitle = useMemo(() => {
-    return <View style={styles.appTitleContainer}>
-      <Image source={images.Logo} style={styles.appTitleLogo}/>
-      <Text style={styles.appTitleText}>My Todo</Text>
-    </View>
-  }, [styles])
+    return (
+      <View style={styles.appTitleContainer}>
+        <Image source={images.Logo} style={styles.appTitleLogo} />
+        <Text style={styles.appTitleText}>My Todo</Text>
+      </View>
+    );
+  }, [styles]);
 
   const navigation = useNavigation<TodoListScreenNavigationProp>();
   const todos = useAppSelector(selectFilteredTodos);
+  const todoFilter = useAppSelector(selectTodoFilter);
 
   const dispatch = useAppDispatch();
 
@@ -121,6 +135,10 @@ const TodoListScreen = () => {
     navigation.navigate('AddTodo');
   };
 
+  const onUpdateTodoFilter = (val: TodoFilter) => {
+    dispatch(updateFilter(val));
+  };
+
   return (
     <SafeAreaView style={styles.todoListContainer} edges={['top']}>
       <Header
@@ -137,6 +155,28 @@ const TodoListScreen = () => {
           </View>
         }
       />
+    <View
+    style={{
+      flex: 1,
+      height: 100,
+      // borderWidth: 1,
+      // borderColor: '#ccc',
+      // borderRadius: 6,
+      // overflow: 'hidden',
+    }}
+  >
+    <Picker
+      selectedValue={todoFilter}
+      onValueChange={onUpdateTodoFilter}
+      mode="dropdown"
+      style={{ width: '100%', height: 50 }}
+      itemStyle={{ height: 50, fontSize: 16 }}
+    >
+      {TodoFilters.map(f => (
+        <Picker.Item key={f} label={camelCase(f)} value={f} />
+      ))}
+    </Picker>
+  </View>
       <View style={styles.scrollViewContainer}>
         <FlatList
           ListEmptyComponent={TodoEmpty}
