@@ -6,7 +6,7 @@ import TodoItem from './components/TodoItem';
 import Icon from '@react-native-vector-icons/fontawesome6';
 import IconButton from './components/IconButton';
 import { useAppDispatch, useAppSelector } from '@app/hooks/storeHook';
-import { deleteTodo, selectTodos, toggleTodo } from './todoSlice';
+import { deleteTodo, selectFilteredTodos, selectTodos, toggleTodo } from './todoSlice';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import useThemedStyles from '@app/hooks/useThemedStyles';
@@ -81,7 +81,7 @@ const TodoListScreen = () => {
   }, [styles])
 
   const navigation = useNavigation<TodoListScreenNavigationProp>();
-  const todos = useAppSelector(selectTodos);
+  const todos = useAppSelector(selectFilteredTodos);
 
   const dispatch = useAppDispatch();
 
@@ -143,7 +143,7 @@ const TodoListScreen = () => {
           data={todos}
           ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
           renderItem={({ item }) => {
-            const disabled = item.completedData !== null;
+            const disabled = item.completedDate !== null;
             return (
               <TodoItem
                 toggleTodo={_ => onToggleTodo(item.id)}
