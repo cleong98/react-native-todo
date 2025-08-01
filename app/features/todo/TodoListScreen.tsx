@@ -10,10 +10,12 @@ import {
   deleteTodo,
   selectFilteredTodos,
   selectTodoFilter,
+  selectTodoKeyword,
   TodoFilter,
   TodoFilters,
   toggleTodo,
   updateFilter,
+  updateKeyword,
 } from './todoSlice';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -22,6 +24,7 @@ import { StackParamList } from '@app/navigation/navigation';
 import { images } from '@app/assets/constant';
 import ChipSelection from '@app/components/ChipSelection/ChipSelection';
 import Chip from '@app/components/ChipSelection/Chip';
+import SearchBar from '@app/components/SearchBar';
 
 type TodoListScreenNavigationProp = NativeStackNavigationProp<
   StackParamList,
@@ -95,11 +98,16 @@ const TodoListScreen = () => {
   const navigation = useNavigation<TodoListScreenNavigationProp>();
   const todos = useAppSelector(selectFilteredTodos);
   const selectedTodoFilter = useAppSelector(selectTodoFilter);
+  const TodoKeyword = useAppSelector(selectTodoKeyword);
 
   const dispatch = useAppDispatch();
 
   const onToggleTodo = (id: string) => {
     dispatch(toggleTodo(id));
+  };
+
+  const onUpdateKeyword = (val: string) => {
+    dispatch(updateKeyword(val));
   };
 
   const onDeleteTodo = (id: string) => {
@@ -154,6 +162,7 @@ const TodoListScreen = () => {
           </View>
         }
       />
+      <SearchBar value={TodoKeyword} onChangeText={onUpdateKeyword} />
       <ChipSelection
         items={TodoFilters}
         renderItem={item => {

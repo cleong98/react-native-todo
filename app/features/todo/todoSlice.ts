@@ -84,6 +84,8 @@ export const selectTodoFilter = (s: RootState) => {
   return s.todo.filter;
 };
 
+export const selectTodoKeyword = (s: RootState) => s.todo.keyword;
+
 export const selectFilteredTodos = createSelector(
   [selectItems, selectFilter, selectKeywordLower],
   (items, filter, keyword) => {
