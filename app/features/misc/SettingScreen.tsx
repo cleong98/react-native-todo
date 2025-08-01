@@ -96,7 +96,7 @@ const SettingScreen = () => {
   );
   return (
     <SafeAreaView style={styles.container} edges={['top']}>
-      <AppBar hideBackButton={true} title="Setting" />
+      <AppBar title="Setting" />
       <View style={styles.sectionContainer}>
         <Text style={styles.sectionTitle}>Personalization</Text>
         <View style={styles.section}>

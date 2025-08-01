@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import Icon from '@react-native-vector-icons/fontawesome6';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useNavigationState } from '@react-navigation/native';
 import useThemedStyles from '@app/hooks/useThemedStyles';
 
 interface AppBarProps {
@@ -25,7 +25,7 @@ const AppBar: FC<AppBarProps> = ({
   trailingIcon,
 }) => {
   const navigation = useNavigation();
-  const canGoBack = navigation.canGoBack();
+  const canGoBack = useNavigationState(state => state?.index > 0);
 
   const styles = useThemedStyles(theme =>
     StyleSheet.create({

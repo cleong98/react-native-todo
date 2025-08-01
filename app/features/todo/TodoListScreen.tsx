@@ -1,4 +1,4 @@
-import { StyleSheet, View, FlatList, Text, Alert } from 'react-native';
+import { StyleSheet, View, FlatList, Text, Alert, Image } from 'react-native';
 import { useMemo } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '@app/components/AppBar';
@@ -11,6 +11,7 @@ import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import useThemedStyles from '@app/hooks/useThemedStyles';
 import { StackParamList } from '@app/navigation/navigation';
+import { images } from '@app/assets/constant';
 
 type TodoListScreenNavigationProp = NativeStackNavigationProp<
   StackParamList,
@@ -20,6 +21,20 @@ type TodoListScreenNavigationProp = NativeStackNavigationProp<
 const TodoListScreen = () => {
   const styles = useThemedStyles(theme =>
     StyleSheet.create({
+      appTitleContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center'
+      },
+      appTitleText: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        color: theme.textColor,
+      },
+      appTitleLogo: {
+        width: 50,
+        height: 50,
+      },
       todoListContainer: {
         flex: 1,
         height: '100%',
@@ -57,6 +72,13 @@ const TodoListScreen = () => {
       </View>
     );
   }, [styles]);
+
+  const AppTitle = useMemo(() => {
+    return <View style={styles.appTitleContainer}>
+      <Image source={images.Logo} style={styles.appTitleLogo}/>
+      <Text style={styles.appTitleText}>My Todo</Text>
+    </View>
+  }, [styles])
 
   const navigation = useNavigation<TodoListScreenNavigationProp>();
   const todos = useAppSelector(selectTodos);
@@ -102,7 +124,7 @@ const TodoListScreen = () => {
   return (
     <SafeAreaView style={styles.todoListContainer} edges={['top']}>
       <Header
-        title={'Todo App'}
+        title={AppTitle}
         action={
           <View style={{ paddingRight: 10 }}>
             <IconButton
