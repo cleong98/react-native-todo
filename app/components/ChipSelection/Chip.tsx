@@ -21,8 +21,8 @@ const Chip = <T extends string>({
         borderRadius: 50,
       },
       chipText: {
-        fontSize: 14,
-        fontWeight: '400',
+        fontSize: 16,
+        fontWeight: '500',
         color: selected ? theme.primary : theme.textColor,
       },
     }),
