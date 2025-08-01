@@ -130,7 +130,6 @@ const UpdateTodoScreen = () => {
   const orientation = useOrientation();
 
   const onSubmit = (id: string, data: UpdateTodoForm) => {
-    console.log(data);
     dispatch(
       updateTodo({
         id,

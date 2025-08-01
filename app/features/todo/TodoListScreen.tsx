@@ -20,6 +20,8 @@ import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import useThemedStyles from '@app/hooks/useThemedStyles';
 import { StackParamList } from '@app/navigation/navigation';
 import { images } from '@app/assets/constant';
+import ChipSelection from '@app/components/ChipSelection/ChipSelection';
+import Chip from '@app/components/ChipSelection/Chip';
 
 type TodoListScreenNavigationProp = NativeStackNavigationProp<
   StackParamList,
@@ -92,7 +94,7 @@ const TodoListScreen = () => {
 
   const navigation = useNavigation<TodoListScreenNavigationProp>();
   const todos = useAppSelector(selectFilteredTodos);
-  const todoFilter = useAppSelector(selectTodoFilter);
+  const selectedTodoFilter = useAppSelector(selectTodoFilter);
 
   const dispatch = useAppDispatch();
 
@@ -151,6 +153,19 @@ const TodoListScreen = () => {
             />
           </View>
         }
+      />
+      <ChipSelection
+        items={TodoFilters}
+        renderItem={item => {
+          return (
+            <Chip
+              key={item}
+              value={item}
+              selected={item === selectedTodoFilter}
+              onPress={onUpdateTodoFilter}
+            />
+          );
+        }}
       />
       <View style={styles.scrollViewContainer}>
         <FlatList

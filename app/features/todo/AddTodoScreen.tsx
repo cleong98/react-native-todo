@@ -92,7 +92,6 @@ const AddTodoScreen = () => {
   const dispatch = useAppDispatch();
 
   const onSubmit = (data: AddTodoFormData) => {
-    console.log(data);
     dispatch(addTodo(data));
     navigation.goBack();
   };

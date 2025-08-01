@@ -64,8 +64,14 @@ const todoSlice = createSlice({
   },
 });
 
-export const { addTodo, deleteTodo, updateTodo, toggleTodo, updateFilter, updateKeyword } =
-  todoSlice.actions;
+export const {
+  addTodo,
+  deleteTodo,
+  updateTodo,
+  toggleTodo,
+  updateFilter,
+  updateKeyword,
+} = todoSlice.actions;
 
 const selectTodosState = (s: RootState) => s.todo;
 const selectItems = (s: RootState) => s.todo.todos;
@@ -74,7 +80,9 @@ const selectKeywordLower = (s: RootState) => s.todo.keyword.toLowerCase();
 
 export const selectTodos = selectTodosState;
 
-export const selectTodoFilter = (s: RootState) => s.todo.filter;
+export const selectTodoFilter = (s: RootState) => {
+  return s.todo.filter;
+};
 
 export const selectFilteredTodos = createSelector(
   [selectItems, selectFilter, selectKeywordLower],

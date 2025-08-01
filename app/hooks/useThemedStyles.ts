@@ -5,12 +5,13 @@ import { TextStyle, ViewStyle } from 'react-native';
 
 const useThemedStyles = <T extends Record<string, ViewStyle | TextStyle>>(
   createStyles: (theme: AppTheme) => T,
+  deps: unknown[] = [],
 ) => {
   const { resolvedTheme } = useTheme();
 
   const appTheme = useMemo(() => getAppTheme(resolvedTheme), [resolvedTheme]);
 
-  return useMemo(() => createStyles(appTheme), [appTheme]);
+  return useMemo(() => createStyles(appTheme), [appTheme, ...deps]);
 };
 
 export default useThemedStyles;
