@@ -1,9 +1,10 @@
 import { ThemeProvider, useTheme } from '@app/context/themeContext';
 import Navigation from '@app/navigation/navigation';
-import { store } from '@app/store';
+import { store, persistor } from '@app/store';
 import { useMemo } from 'react';
 import { StatusBar } from 'react-native';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/integration/react';
 
 const AppContent = () => {
   const { resolvedTheme } = useTheme();
@@ -23,9 +24,11 @@ const AppContent = () => {
 function App() {
   return (
     <ThemeProvider>
-      <Provider store={store}>
-        <AppContent />
-      </Provider>
+      <PersistGate persistor={persistor}>
+        <Provider store={store}>
+          <AppContent />
+        </Provider>
+      </PersistGate>
     </ThemeProvider>
   );
 }

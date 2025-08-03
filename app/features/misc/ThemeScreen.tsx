@@ -46,7 +46,7 @@ const ThemeScreen = () => {
   }));
 
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
+    <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
       <AppBar
         title=""
         trailingIcon={<Cancel size={18} style={styles.backIconColor} />}

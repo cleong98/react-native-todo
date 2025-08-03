@@ -95,7 +95,7 @@ const SettingScreen = () => {
     [handleThemeNavigate, styles, theme],
   );
   return (
-    <SafeAreaView style={styles.container} edges={['top']}>
+    <SafeAreaView style={styles.container} edges={['top', 'bottom']}>
       <AppBar title="Setting" />
       <View style={styles.sectionContainer}>
         <Text style={styles.sectionTitle}>Personalization</Text>

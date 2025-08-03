@@ -93,7 +93,7 @@ export const selectFilteredTodos = createSelector(
       filter === 'active'
         ? items.filter(todo => todo.completedDate === null)
         : filter === 'completed'
-        ? items.filter(todo => todo.completedDate !== null)
+        ? items.filter(todo => isTodoCompleted(todo))
         : items;
     return keyword
       ? byFilter.filter(
@@ -107,5 +107,9 @@ export const selectFilteredTodos = createSelector(
 
 export const selectTodoById = (state: RootState, id: string) =>
   state.todo.todos.find(todo => todo.id === id);
+
+export const isTodoCompleted = (todo: Todo): boolean => {
+  return todo.completedDate !== null;
+};
 
 export default todoSlice.reducer;

@@ -1,4 +1,13 @@
-import { StyleSheet, View, FlatList, Text, Alert, Image, TouchableWithoutFeedback, Keyboard } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  FlatList,
+  Text,
+  Alert,
+  Image,
+  TouchableWithoutFeedback,
+  Keyboard,
+} from 'react-native';
 import { useMemo } from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import Header from '@app/components/AppBar';
@@ -8,6 +17,7 @@ import IconButton from './components/IconButton';
 import { useAppDispatch, useAppSelector } from '@app/hooks/storeHook';
 import {
   deleteTodo,
+  isTodoCompleted,
   selectFilteredTodos,
   selectTodoFilter,
   selectTodoKeyword,
@@ -148,7 +158,7 @@ const TodoListScreen = () => {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaView style={styles.todoListContainer} edges={['top']}>
+      <SafeAreaView style={styles.todoListContainer} edges={['top', 'bottom']}>
         <Header
           title={AppTitle}
           action={
@@ -188,9 +198,10 @@ const TodoListScreen = () => {
             data={todos}
             ItemSeparatorComponent={() => <View style={{ height: 10 }} />}
             renderItem={({ item }) => {
-              const disabled = item.completedDate !== null;
+              const isCompleted = isTodoCompleted(item);
               return (
                 <TodoItem
+                  isCompleted={isCompleted}
                   toggleTodo={_ => onToggleTodo(item.id)}
                   title={item.title}
                   description={item.description}
@@ -198,7 +209,7 @@ const TodoListScreen = () => {
                   actions={
                     <>
                       <IconButton
-                        disabled={disabled}
+                        disabled={isCompleted}
                         icon={
                           <Icon
                             size={16}
@@ -210,7 +221,7 @@ const TodoListScreen = () => {
                         backgroundColor="#4CAF50"
                       />
                       <IconButton
-                        disabled={disabled}
+                        disabled={isCompleted}
                         icon={
                           <Icon
                             size={16}

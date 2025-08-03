@@ -8,12 +8,14 @@ interface TodoItemProps {
   description: string;
   actions?: ReactNode;
   toggleTodo?: (completed: boolean) => void;
+  isCompleted: boolean;
 }
 
 const TodoItem: FC<TodoItemProps> = ({
   title,
   description,
   actions,
+  isCompleted,
   toggleTodo,
 }) => {
   const styles = useThemedStyles(theme => ({
@@ -47,7 +49,7 @@ const TodoItem: FC<TodoItemProps> = ({
       textDecorationLine: 'line-through',
     },
   }));
-  const [completed, setCompleted] = useState(false);
+  const [completed, setCompleted] = useState(isCompleted);
   return (
     <View style={styles.container}>
       <BouncyCheckbox
